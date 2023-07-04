@@ -6,18 +6,27 @@ from requests.auth import HTTPBasicAuth
 from datetime import datetime
 
 
-get_url = 'http://89.236.203.57:6070/SD_TEST/hs/STSAPI/download/RequestType'
-post_url = 'http://89.236.203.57:6070/SD_TEST/hs/STSAPI/upload/Request'
-get_mails_url = 'http://89.236.203.57:6070/SD_TEST/hs/STSAPI/download/RequestDomenType'
-post_photo_url = 'http://89.236.203.57:6070/SD_TEST/hs/STSAPI/upload/fileBin?fileName='
 
-api_login = 'Admin_Api' 
-api_password = '!QAZ2wsx'
+
+
+get_plea_types_url = 'http://sd.softtech.uz/ServiceDesk/hs/STSAPI/download/RequestType' # запрос для получения типов заявок
+post_plea_url = 'http://sd.softtech.uz/ServiceDesk/hs/STSAPI/upload/Request'            # запрос для отправки заявки
+get_mails_url = 'http://sd.softtech.uz/ServiceDesk/hs/STSAPI/download/RequestDomenType' # запрос для получения доступных почт
+post_photo_url = 'http://sd.softtech.uz/ServiceDesk/hs/STSAPI/upload/fileBin?fileName=' # запрос для отправки фото
+
+api_login = 'Admin_Api'                                                                 # логин апи
+api_password = '!QAZ2wsx'                                                               # пароль апи
+
+
+
+
+
+
 
 
 def get_plea_types():
 	try:
-		types = requests.get(get_url, auth = HTTPBasicAuth(api_login, api_password), timeout = 30)
+		types = requests.get(get_plea_types_url, auth = HTTPBasicAuth(api_login, api_password), timeout = 30)
 		if types.status_code == 200:
 			return types
 
@@ -114,7 +123,7 @@ def send_plea_to_1c(user_id, plea_num):
 	 	'Accept': 'text/plain'
 	 	}
 	try:
-		req = requests.post(post_url, json = request_data, headers = headers, auth = HTTPBasicAuth(api_login, api_password), timeout = 30)
+		req = requests.post(post_plea_url, json = request_data, headers = headers, auth = HTTPBasicAuth(api_login, api_password), timeout = 30)
 		if req.status_code == 200:
 			return 'Успешно'
 
